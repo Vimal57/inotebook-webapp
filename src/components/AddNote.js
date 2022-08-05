@@ -4,15 +4,15 @@ import noteContext from '../context/notes/NoteContext';
 function AddNote() {
 	const context = useContext(noteContext);
 	const { createNote } = context;
-    const [note, setNote] = useState({ title: "", description: "", tag: "" })
-    const handleClick = (e) => {
-        e.preventDefault();
-        createNote(note.title, note.description, note.tag)
-    }
-    const onChange = (e) => {
-        setNote({ ...note, [e.target.name]: e.target.value })
-    }
-
+	const [note, setNote] = useState({ title: '', description: '', tag: '' });
+	const handleClick = (e) => {
+		e.preventDefault();
+		createNote(note.title, note.description, note.tag);
+		setNote({ title: '', description: '', tag: '' });
+	};
+	const onChange = (e) => {
+		setNote({ ...note, [e.target.name]: e.target.value });
+	};
 
 	return (
 		<div className="container my-3">
@@ -26,9 +26,10 @@ function AddNote() {
 						type="text"
 						className="form-control"
 						id="title"
-                        name='title'
+						name="title"
 						aria-describedby="emailHelp"
-                        onChange={onChange}
+						onChange={onChange}
+						value={note.title}
 					/>
 				</div>
 				<div className="mb-3">
@@ -40,7 +41,8 @@ function AddNote() {
 						className="form-control"
 						id="description"
 						name="description"
-                        onChange={onChange}
+						onChange={onChange}
+						value={note.description}
 					/>
 				</div>
 				<div className="mb-3">
@@ -52,7 +54,8 @@ function AddNote() {
 						className="form-control"
 						id="tag"
 						name="tag"
-                        onChange={onChange}
+						onChange={onChange}
+						value={note.tag}
 					/>
 				</div>
 				<button type="submit" className="btn btn-primary" onClick={handleClick}>

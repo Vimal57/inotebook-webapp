@@ -85,6 +85,7 @@ const NoteState = (props) => {
 			setNotes(json.data.notes);
 		}
 	};
+	
 	return (
 		<NoteContext.Provider
 			value={{ notes, getNotes, createNote, editNote, deleteNote }}
