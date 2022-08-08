@@ -14,7 +14,7 @@ const NoteState = (props) => {
 			headers: {
 				'Content-Type': 'application/json',
 				'auth-token':
-					'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlMzkyZjEzNmZlNmQzZGNlNWVlOGU0In0sImlhdCI6MTY1OTM0MTgyMH0.eHRFO1SsCGEtCFvHp_fIoqEb0_dZYO7YHpy9VgvQJvA',
+					localStorage.getItem("token"),
 			},
 		});
 
@@ -23,14 +23,14 @@ const NoteState = (props) => {
 	};
 
 	// Create Note
-	const createNote = async (title, description, tag) => {
+	const createNote = async (title, description, tag, showAlert) => {
 		console.log('create note');
 		const response = await fetch(`${host}/note/create`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				'auth-token':
-					'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlMzkyZjEzNmZlNmQzZGNlNWVlOGU0In0sImlhdCI6MTY1OTM0MTgyMH0.eHRFO1SsCGEtCFvHp_fIoqEb0_dZYO7YHpy9VgvQJvA',
+					localStorage.getItem("token"),
 			},
 			body: JSON.stringify({ title, description, tag }),
 		});
@@ -39,6 +39,7 @@ const NoteState = (props) => {
 			setNotes(
 				notes.concat(json.data)
 			);
+			showAlert("Note created successfully...", "success")
 		}
 	};
 
@@ -51,7 +52,7 @@ const NoteState = (props) => {
 			headers: {
 				'Content-Type': 'application/json',
 				'auth-token':
-					'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlMzkyZjEzNmZlNmQzZGNlNWVlOGU0In0sImlhdCI6MTY1OTM0MTgyMH0.eHRFO1SsCGEtCFvHp_fIoqEb0_dZYO7YHpy9VgvQJvA',
+					localStorage.getItem("token"),
 			},
 			body: JSON.stringify({ title, description, tag }),
 		});
@@ -70,19 +71,20 @@ const NoteState = (props) => {
 	};
 
 	// Delete Note
-	const deleteNote = async (id) => {
+	const deleteNote = async (id, alert) => {
 		console.log('delete note');
 		const response = await fetch(`${host}/note/delete/${id}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				'auth-token':
-					'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlMzkyZjEzNmZlNmQzZGNlNWVlOGU0In0sImlhdCI6MTY1OTM0MTgyMH0.eHRFO1SsCGEtCFvHp_fIoqEb0_dZYO7YHpy9VgvQJvA',
+					localStorage.getItem("token"),
 			}
 		});
 		const json = await response.json();
 		if (json.data.notes) {
 			setNotes(json.data.notes);
+			alert("Note deleted successfully...", "success");
 		}
 	};
 	

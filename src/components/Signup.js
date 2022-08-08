@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-function Signup() {
-	const [credentials, setCredentials] = useState({name: '', email: '', password: '', cpassword: '' });
+function Signup(props) {
+	const [credentials, setCredentials] = useState({
+		name: '',
+		email: '',
+		password: '',
+		cpassword: '',
+	});
 	let navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
@@ -20,16 +25,16 @@ function Signup() {
 		});
 		const json = await response.json();
 
-    if (json.data.authToken) {
+		if (json.data.authToken) {
 			// save token and redirect to home page
-			localStorage.setItem("token", json.data.authToken);
-			navigate("/");
-		} else if(json.msg === "User already exist!") {
-			alert("User already exist with this email, Please try with another email!!");
+			localStorage.setItem('token', json.data.authToken);
+			navigate('/');
+			props.showAlert('Account created successfully...', "success")
+		} else if (json.msg === 'User already exist!') {
+			props.showAlert('User already exist with this email, Please try with another email!!', "danger")
 		} else {
-      alert("Please enter valid data!!")
-    }
-
+			props.showAlert("Please enter valid data!!", "danger")
+		}
 	};
 
 	const onChange = (e) => {
@@ -45,7 +50,7 @@ function Signup() {
 						type="text"
 						className="form-control"
 						id="name"
-            name='name'
+						name="name"
 						aria-describedby="emailHelp"
 						placeholder="Enter Name"
 						onChange={onChange}
@@ -57,7 +62,7 @@ function Signup() {
 						type="email"
 						className="form-control"
 						id="email"
-            name='email'
+						name="email"
 						aria-describedby="emailHelp"
 						placeholder="Enter Email"
 						onChange={onChange}
@@ -69,7 +74,7 @@ function Signup() {
 						type="password"
 						className="form-control"
 						id="password"
-            name='password'
+						name="password"
 						placeholder="Password"
 						onChange={onChange}
 					/>
@@ -80,7 +85,7 @@ function Signup() {
 						type="password"
 						className="form-control"
 						id="cpassword"
-            name='cpassword'
+						name="cpassword"
 						placeholder="Confirm Password"
 						onChange={onChange}
 					/>
